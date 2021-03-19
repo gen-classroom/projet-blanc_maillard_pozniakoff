@@ -29,6 +29,3 @@ Le contenu de l'article
 
 Contenu de la conclusion
 ```
-
-Voici le format des pages "article" sur lequel on va se baser, c'est un format très explicite qui permet de contenir à la fois les métadonnées (titre, auteur, date) ainsi que l'article en lui même (le contenu). On précise également la possibilité d'inclure une image et une conclusion.
-
