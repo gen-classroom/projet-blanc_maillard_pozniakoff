@@ -8,12 +8,17 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
+@Command(name = "statique",
+        subcommands = {newCommand.class, cleanCommand.class, buildCommand.class, serveCommand.class}
+        description = "TBD")
 
+@Command(name = "build")
+public class buildCommand implements Runnable {
+    @Parameters(arity = "1", defaultValue = "./", description = "need a filepath to build")
+    File filepath;
 
-
-class Main {
-    @Command(name = "new", description = "TBD")
-    @Command(name = "clean", description = "TBD")
-    @Command(name = "build", description = "TBD")
-    @Command(name = "serve", description = "TBD")
+    @Override
+    public void run() {
+        System.out.println("Adding some files to the staging area");
+    }
 }
