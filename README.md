@@ -21,7 +21,7 @@ Le contenu de l'article
 
 ![une image](./image.png)
 
-## Conslusion
+## Conclusion
 
 Contenu de la conclusion
 ```
