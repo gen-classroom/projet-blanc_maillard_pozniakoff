@@ -17,8 +17,6 @@ public class Build implements Callable<Integer> {
 
     final File myStaticSite = new File(currentPath);
 
-    deleteDirectory(myStaticSite);
-
     File build = new File(buildPath);
 
     System.out.println(currentPath);
@@ -27,19 +25,8 @@ public class Build implements Callable<Integer> {
     File htmlFile = new File(buildPath + "/pageRandom.html");
     htmlFile.createNewFile();
 
-    return 0;
+    return 1;
   }
 
-
-
-  boolean deleteDirectory(File directoryToBeDeleted) {
-    File[] allContents = directoryToBeDeleted.listFiles();
-    if (allContents != null) {
-      for (File file : allContents) {
-        deleteDirectory(file);
-      }
-    }
-    return directoryToBeDeleted.delete();
-  }
 
 }
