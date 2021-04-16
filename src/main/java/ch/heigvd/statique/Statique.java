@@ -1,9 +1,7 @@
 package ch.heigvd.statique;
 
-import ch.heigvd.statique.command.Build;
-import ch.heigvd.statique.command.Clean;
-import ch.heigvd.statique.command.Init;
-import ch.heigvd.statique.command.Serve;
+import ch.heigvd.statique.command.*;
+
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -11,7 +9,7 @@ import picocli.CommandLine.Command;
 @Command(
     name = "statique",
     description = "A brand new static site generator.",
-    subcommands = {Init.class, Clean.class, Build.class, Serve.class})
+    subcommands = {Init.class, Clean.class, Build.class, Serve.class, Version.class})
 public class Statique implements Callable<Integer> {
 
 
