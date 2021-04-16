@@ -9,6 +9,7 @@ import picocli.CommandLine.Command;
 public class Version implements Callable<Integer> {
 
     @Override public Integer call() throws IOException {
+        //Look for the version in the pom.xml file
         java.io.InputStream is = this.getClass().getResourceAsStream("my.properties");
         java.util.Properties p = new Properties();
         p.load(is);
