@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import picocli.CommandLine.Command;
 
-@Command(name = "init", description = "Initialize a static site directory")
+@Command(name = "version", description = "Print version of static site generator")
 public class Version implements Callable<Integer> {
 
     @Override public Integer call() throws IOException {
