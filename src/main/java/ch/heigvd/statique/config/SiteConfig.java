@@ -11,14 +11,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SiteConfig{
-    String site;
-    String title;
-    String description;
-    String name;
-    String domain;
-    String property;
-    Date date_of_creation;
+public class SiteConfig {
+    private String site;
+    private String title;
+    private String description;
+    private String name;
+    private String domain;
+    private String property;
+    private Date date_of_creation;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     private final ObjectMapper MAPPER;
@@ -34,7 +34,7 @@ public class SiteConfig{
         this.property = property;
     }
 
-    SiteConfig() {
+    public SiteConfig() {
         YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
         MAPPER = new ObjectMapper(YF);
         MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
