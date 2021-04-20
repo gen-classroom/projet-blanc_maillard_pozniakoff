@@ -11,6 +11,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * POJO object
+ * Used to contain the YAML config of the website
+ * This uses Jackson Maven dependancy
+ */
 public class SiteConfig {
     private String site;
     private String title;
@@ -24,7 +29,16 @@ public class SiteConfig {
     private final ObjectMapper MAPPER;
     private final YAMLFactory YF = new YAMLFactory();
 
-    SiteConfig(String site, String title, String description, String name, String domain, String property) {
+    /**
+     * Constructor
+     * @param site
+     * @param title
+     * @param description
+     * @param name
+     * @param domain
+     * @param property
+     */
+    public SiteConfig(String site, String title, String description, String name, String domain, String property) {
         this();
         this.site = site;
         this.title = title;
@@ -34,12 +48,19 @@ public class SiteConfig {
         this.property = property;
     }
 
+    /**
+     * Default constructor
+     */
     public SiteConfig() {
         YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
         MAPPER = new ObjectMapper(YF);
         MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
         MAPPER.setDateFormat(DATE_FORMAT);
     }
+
+    /////////////////////////////////////////////
+    /// GETTERS AND SETTERS//////////////////////
+    /////////////////////////////////////////////
 
     public Date getDate_of_creation() {
         return date_of_creation;
@@ -97,6 +118,9 @@ public class SiteConfig {
         this.property = property;
     }
 
+    /**
+     * @return the configuration YAML in a string
+     */
     public String toString(){
         StringBuilder sb = new StringBuilder();
         return "site: " + site + "\n"
@@ -109,12 +133,23 @@ public class SiteConfig {
                 ;
     }
 
+    /**
+     * Load the content of an YAML configuration into a siteConfig
+     * @param filePath the path to the config to load
+     * @return the newly created siteConfig
+     * @throws IOException
+     */
     public static SiteConfig loadFromDocument(Path filePath) throws IOException {
         SiteConfig sc = new SiteConfig();
         return sc.MAPPER.readValue(new File(filePath.toString()), SiteConfig.class);
     }
 
-    public void loadToDocument(Path filePath) throws IOException{
+    /**
+     * Write the POJO object in a config file
+     * @param filePath the file path to the yaml (including the name of the file)
+     * @throws IOException
+     */
+    public void writeConfiguration(Path filePath) throws IOException{
         MAPPER.writeValue(new File(filePath.toString()), this);
     }
 }
