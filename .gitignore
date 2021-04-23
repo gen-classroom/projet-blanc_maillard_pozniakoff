@@ -1,0 +1,5 @@
+*.class
+pom.properties
+*.zip
+*.lst
+*.jar
