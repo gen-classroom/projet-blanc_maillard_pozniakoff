@@ -4,15 +4,20 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.concurrent.Callable;
+
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
+    @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to initialize site in")
+    String path;
+
   @Override
   public Integer call() throws IOException {
 
-    String currentPath = System.getProperty("user.dir") + "/myStaticSite";
+    String currentPath = System.getProperty("user.dir") + path;
     String buildPath = currentPath + "/build";
 
     final File myStaticSite = new File(currentPath);
