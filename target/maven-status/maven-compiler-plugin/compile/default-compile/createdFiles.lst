@@ -1,7 +1,0 @@
-ch/heigvd/statique/command/Build.class
-ch/heigvd/statique/command/Init.class
-ch/heigvd/statique/command/Clean.class
-ch/heigvd/statique/Statique.class
-ch/heigvd/statique/config/SiteConfig.class
-ch/heigvd/statique/command/Serve.class
-ch/heigvd/statique/config/SiteIndex.class
