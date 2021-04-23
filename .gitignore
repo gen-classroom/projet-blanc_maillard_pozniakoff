@@ -1,6 +1,2 @@
-*.class
-pom.properties
-*.zip
-*.lst
-*.jar
+target/
 .idea/
