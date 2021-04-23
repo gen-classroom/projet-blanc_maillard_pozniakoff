@@ -46,7 +46,7 @@ public class Init implements Callable<Integer> {
         }
 
         // create the md file if it does not exists.
-        if(!createFile(index)){
+        if(!createFile(index) && !overwrite){
             System.out.println("Configuration failed.");
             return 1;
         }
