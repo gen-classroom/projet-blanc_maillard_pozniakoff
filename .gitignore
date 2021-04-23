@@ -3,3 +3,4 @@ pom.properties
 *.zip
 *.lst
 *.jar
+.idea/
