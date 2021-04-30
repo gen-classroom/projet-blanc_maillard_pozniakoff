@@ -11,9 +11,13 @@ import picocli.CommandLine.Command;
 @Command(
     name = "statique",
     description = "A brand new static site generator.",
-    subcommands = {Init.class, Clean.class, Build.class, Serve.class})
+    subcommands = {Init.class, Clean.class, Build.class, Serve.class},
+  version = {"0.0.1"})
 public class Statique implements Callable<Integer> {
 
+
+  @CommandLine.Option(names = {"-V", "--version"}, versionHelp = true, description = "print version of generator")
+  boolean versionRequested;
 
   public static void main(String... args) {
     int exitCode = new CommandLine(new Statique()).execute(args);
@@ -22,6 +26,12 @@ public class Statique implements Callable<Integer> {
 
   @Override
   public Integer call() throws Exception {
+    CommandLine commandLine = new CommandLine(new Statique());
+    if (versionRequested) {
+      commandLine.printVersionHelp(System.out);
+      return 0;
+    }
+
     CommandLine.usage(this, System.out);
     return 0;
   }
