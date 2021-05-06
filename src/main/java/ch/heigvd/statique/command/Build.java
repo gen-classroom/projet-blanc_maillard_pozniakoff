@@ -12,6 +12,8 @@ import picocli.CommandLine.Command;
 
 import org.apache.commons.io.FilenameUtils;
 
+import ch.heigvd.statique.config.MDToHTML;
+
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
@@ -50,15 +52,6 @@ public class Build implements Callable<Integer> {
         }
       }
     }
-  }
-
-  private void convertMDtoHTML(File md, String dest){
-    if(!FilenameUtils.getExtension((md.getName())).equals("md")){
-      System.out.println("Please give a Markdown file to convert");
-    }
-
-    //TODO: Convert MD file content to an HTML file
-
   }
 
 }
