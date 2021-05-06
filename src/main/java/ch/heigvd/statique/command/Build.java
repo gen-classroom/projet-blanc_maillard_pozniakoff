@@ -47,7 +47,8 @@ public class Build implements Callable<Integer> {
             buildSiteStatique(file, String.valueOf(newPath));
           }
           else if(FilenameUtils.getExtension(filename).equals("md")){
-            convertMDtoHTML(file, path);
+            MDToHTML translator = new MDToHTML();
+            translator.MDtoHTML(path);
           }
         }
       }

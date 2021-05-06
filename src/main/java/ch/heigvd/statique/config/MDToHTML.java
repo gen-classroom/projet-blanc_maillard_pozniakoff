@@ -15,7 +15,7 @@ public class MDToHTML {
      * @return la conversion en html
      * @throws IOException
      */
-    static String MDtoHTML(String path) throws IOException {
+    public static String MDtoHTML(String path) throws IOException {
         //récupère le contenu du fichier
         BufferedReader br = new BufferedReader(new FileReader(path));
         String fileContent = "";
