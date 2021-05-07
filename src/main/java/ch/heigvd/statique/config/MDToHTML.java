@@ -2,10 +2,7 @@ package ch.heigvd.statique.config;
 
 import java.io.*;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
-import com.github.jknack.handlebars.io.TemplateLoader;
+
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -37,15 +34,6 @@ public class MDToHTML {
         return renderer.render(document);
     }
 
-    static void templating(String path) throws IOException {
-        TemplateLoader loader = new ClassPathTemplateLoader();
-        loader.setPrefix("/templates");
-        loader.setSuffix(".html");
-        Handlebars handlebars = new Handlebars(loader);
 
-        Template template = handlebars.compile("mytemplate");
-
-        System.out.println(template.apply("Handlebars.java"));
-    }
 
 }

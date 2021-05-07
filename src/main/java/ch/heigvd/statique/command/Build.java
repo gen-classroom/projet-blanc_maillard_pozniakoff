@@ -8,6 +8,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import com.github.jknack.handlebars.io.TemplateLoader;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -51,14 +55,28 @@ public class Build implements Callable<Integer> {
             MDToHTML translator = new MDToHTML();
             String contentFileHTML = translator.MDtoHTML(path + "/" + filename);
             String htmlPath = path + "/" + FilenameUtils.removeExtension(filename) + ".html";
+
+            String contentWithTemplate = templating(contentFileHTML);
+
             FileWriter writer = new FileWriter(htmlPath);
-            writer.write(contentFileHTML);
+            writer.write(contentWithTemplate);
             writer.close();
 
           }
         }
       }
     }
+  }
+
+  static String templating(String content) throws IOException {
+    TemplateLoader loader = new ClassPathTemplateLoader();
+    loader.setPrefix("templates");
+    loader.setSuffix(".html");
+    Handlebars handlebars = new Handlebars(loader);
+
+    Template template = handlebars.compile("layout");
+
+    return template.apply(content);
   }
 
 }
