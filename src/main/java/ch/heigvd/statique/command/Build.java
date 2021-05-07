@@ -24,7 +24,7 @@ public class Build implements Callable<Integer> {
   @Override
   public Integer call() throws IOException {
 
-    String currentPath = System.getProperty("user.dir") + path;
+    String currentPath = System.getProperty("user.dir") + "/" + path;
     String buildPath = currentPath + "/build";
 
     File build = new File(buildPath);
