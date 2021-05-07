@@ -1,6 +1,7 @@
 package ch.heigvd.statique.command;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.nio.file.Path;
@@ -48,7 +49,12 @@ public class Build implements Callable<Integer> {
           }
           else if(FilenameUtils.getExtension(filename).equals("md")){
             MDToHTML translator = new MDToHTML();
-            translator.MDtoHTML(path);
+            String contentFileHTML = translator.MDtoHTML(path + "/" + filename);
+            String htmlPath = path + "/" + FilenameUtils.removeExtension(filename) + ".html";
+            FileWriter writer = new FileWriter(htmlPath);
+            writer.write(contentFileHTML);
+            writer.close();
+
           }
         }
       }
