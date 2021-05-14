@@ -17,13 +17,17 @@ public class Init implements Callable<Integer> {
 
     //Option to indicate if we have to overwrite existing files
     @CommandLine.Option(names = "-O", description = "Overwrite existing config")
+    private
     boolean overwrite;
 
     @Override
     public Integer call() throws Exception{
+        String currentPath = System.getProperty("user.dir") + "/" + path;
+
         //check if last char is a / to add it to indicate it is a directory
         if (path.charAt(path.length()-1) != '/')
             path+='/';
+        path = currentPath+path;
 
         //Create the directory hierarchy from arguments given to command if it does not exists.
         File directory = new File(path);
