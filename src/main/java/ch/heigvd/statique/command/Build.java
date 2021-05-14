@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
+import ch.heigvd.statique.config.Article;
+import ch.heigvd.statique.config.SiteConfig;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -15,12 +17,26 @@ import org.apache.commons.io.FilenameUtils;
 
 import ch.heigvd.statique.config.MDToHTML;
 
+import com.github.jknack.handlebars.Context;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
+
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
+
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to initialize site in")
   String path;
 
+  //répertoire build
+  private File build;
+
+  //fichier layout du template
+  private Template layout;
 
   @Override
   public Integer call() throws IOException {
@@ -28,7 +44,7 @@ public class Build implements Callable<Integer> {
     String currentPath = System.getProperty("user.dir") + "/" + path;
     String buildPath = currentPath + "/build";
 
-    File build = new File(buildPath);
+    build = new File(buildPath);
     build.mkdirs();
 
     buildSiteStatique(build, buildPath);
@@ -40,6 +56,7 @@ public class Build implements Callable<Integer> {
     if(dir != null){
       File[] listFiles = dir.listFiles();
       if(listFiles != null){
+        createLayoutTemplate();
         for(File file : listFiles){
           String filename = file.getName();
           if(file.isDirectory() && !filename.equals("build")){
@@ -52,13 +69,40 @@ public class Build implements Callable<Integer> {
             String contentFileHTML = translator.MDtoHTML(path + "/" + filename);
             String htmlPath = path + "/" + FilenameUtils.removeExtension(filename) + ".html";
 
+            Path pathConfig = Paths.get(System.getProperty("user.dir") + "/" + this.path + "/config.yaml");
+            SiteConfig sc = SiteConfig.loadFromDocument(pathConfig);
+
+            String siteTitre = sc.getSite();
+            String pageTitre = sc.getTitle();
+
+            Article article = new Article(siteTitre,pageTitre,contentFileHTML);
+
+            String contentTemplate = unescapeHtml4(layout.apply(article));
+
             FileWriter writer = new FileWriter(htmlPath);
-            writer.write(contentFileHTML);
+            writer.write(contentTemplate);
             writer.close();
 
           }
         }
       }
+    }
+  }
+
+  private void createLayoutTemplate()
+  {
+    try
+    {
+      FileTemplateLoader loader = new FileTemplateLoader(new File(build.getPath() + "/templates/"));
+      loader.setSuffix(".html");
+      Handlebars handlebars = new Handlebars(loader);
+      handlebars.setPrettyPrint(true);
+
+      layout = handlebars.compile("layout");
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
     }
   }
 
