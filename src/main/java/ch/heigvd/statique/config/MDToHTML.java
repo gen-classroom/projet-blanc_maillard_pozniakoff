@@ -1,10 +1,11 @@
 package ch.heigvd.statique.config;
 
 import java.io.*;
+
+
 import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-
 
 public class MDToHTML {
 
@@ -15,7 +16,7 @@ public class MDToHTML {
      * @return la conversion en html
      * @throws IOException
      */
-    static String MDtoHTML(String path) throws IOException {
+    public static String MDtoHTML(String path) throws IOException {
         //récupère le contenu du fichier
         BufferedReader br = new BufferedReader(new FileReader(path));
         String fileContent = "";
@@ -32,4 +33,7 @@ public class MDToHTML {
                 build();
         return renderer.render(document);
     }
+
+
+
 }
