@@ -11,30 +11,6 @@ import picocli.CommandLine;
 
 class StatiqueTest {
 
-  private final ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-  @BeforeEach
-  void setUp() {
-    System.setOut(new PrintStream(output));
-  }
-
-  @AfterEach
-  void tearDown() {
-  }
-
-  @Test
-  void result() throws Exception {
-    int exitCode = new CommandLine(new Statique()).execute();
-    assertEquals(exitCode, 0);
-    assertThrows(Exception.class, () -> {
-      throw new Exception();
-    });
-  }
-
-  @Test
-  void output() throws Exception {
-    new CommandLine(new Statique()).execute("init");
-    assertTrue(output.toString().contains("init"));
-  }
 
 }

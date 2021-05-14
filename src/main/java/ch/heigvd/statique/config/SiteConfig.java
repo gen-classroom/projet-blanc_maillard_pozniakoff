@@ -11,11 +11,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * POJO object
  * Used to contain the YAML config of the website
  * This uses Jackson Maven dependancy
  */
+@Getter
+@Setter
 public class SiteConfig {
     private String site;
     private String title;
@@ -58,65 +63,6 @@ public class SiteConfig {
         MAPPER.setDateFormat(DATE_FORMAT);
     }
 
-    /////////////////////////////////////////////
-    /// GETTERS AND SETTERS//////////////////////
-    /////////////////////////////////////////////
-
-    public Date getDate_of_creation() {
-        return date_of_creation;
-    }
-
-    public void setDate_of_creation(Date date_of_creation) {
-        this.date_of_creation = date_of_creation;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDomain() {
-        return domain;
-    }
-
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property;
-    }
 
     /**
      * @return the configuration YAML in a string
