@@ -14,22 +14,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Getter
+@Setter
 public class SiteConfig {
-    //nécessaire de faire les getter setter de date of creation manuellement car bug sinon
-    @Getter @Setter
     private String site;
-    @Getter @Setter
     private String title;
-    @Getter @Setter
     private String description;
-    @Getter @Setter
     private String name;
-    @Getter @Setter
     private String domain;
-    @Getter @Setter
     private String property;
-
-    private Date date_of_creation;
+    private Date date;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     private final ObjectMapper MAPPER;
@@ -64,16 +58,6 @@ public class SiteConfig {
         MAPPER.setDateFormat(DATE_FORMAT);
     }
 
-    /**
-     * Getter et setter pour date of creation
-     * nécessaire d'être manuel car plante avec lombok :(
-     */
-    public Date getDate_of_creation() {
-        return date_of_creation;
-    }
-    public void setDate_of_creation(Date date_of_creation) {
-        this.date_of_creation = date_of_creation;
-    }
 
     /**
      * @return une string avec la config
@@ -86,7 +70,7 @@ public class SiteConfig {
                 + "name: " + name + "\n"
                 + "domain: " + domain + "\n"
                 + "property: " + property + "\n"
-                + "date_of_creation: " + date_of_creation + "\n"
+                + "date_of_creation: " + date + "\n"
                 ;
     }
 
