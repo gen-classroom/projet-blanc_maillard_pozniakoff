@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -11,23 +14,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
-/**
- * POJO object
- * Used to contain the YAML config of the website
- * This uses Jackson Maven dependancy
- */
-@Getter
-@Setter
 public class SiteConfig {
+    //nécessaire de faire les getter setter de date of creation manuellement car bug sinon
+    @Getter @Setter
     private String site;
+    @Getter @Setter
     private String title;
+    @Getter @Setter
     private String description;
+    @Getter @Setter
     private String name;
+    @Getter @Setter
     private String domain;
+    @Getter @Setter
     private String property;
+
     private Date date_of_creation;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
@@ -43,7 +44,7 @@ public class SiteConfig {
      * @param domain
      * @param property
      */
-    public SiteConfig(String site, String title, String description, String name, String domain, String property) {
+    SiteConfig(String site, String title, String description, String name, String domain, String property) {
         this();
         this.site = site;
         this.title = title;
@@ -54,7 +55,7 @@ public class SiteConfig {
     }
 
     /**
-     * Default constructor
+     * Constructor
      */
     public SiteConfig() {
         YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
@@ -63,9 +64,19 @@ public class SiteConfig {
         MAPPER.setDateFormat(DATE_FORMAT);
     }
 
+    /**
+     * Getter et setter pour date of creation
+     * nécessaire d'être manuel car plante avec lombok :(
+     */
+    public Date getDate_of_creation() {
+        return date_of_creation;
+    }
+    public void setDate_of_creation(Date date_of_creation) {
+        this.date_of_creation = date_of_creation;
+    }
 
     /**
-     * @return the configuration YAML in a string
+     * @return une string avec la config
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -80,9 +91,9 @@ public class SiteConfig {
     }
 
     /**
-     * Load the content of an YAML configuration into a siteConfig
-     * @param filePath the path to the config to load
-     * @return the newly created siteConfig
+     * Charge la config dans une instance de siteConfig depuis un fichier yaml
+     * @param filePath, le chemin vers le fichier
+     * @return la config nouvellement créée
      * @throws IOException
      */
     public static SiteConfig loadFromDocument(Path filePath) throws IOException {
@@ -91,8 +102,8 @@ public class SiteConfig {
     }
 
     /**
-     * Write the POJO object in a config file
-     * @param filePath the file path to the yaml (including the name of the file)
+     * Ecrit une config depuis un objet java
+     * @param filePath
      * @throws IOException
      */
     public void writeConfiguration(Path filePath) throws IOException{
