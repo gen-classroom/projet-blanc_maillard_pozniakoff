@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.File;
@@ -17,13 +18,11 @@ import java.util.Date;
 @Getter
 @Setter
 public class SiteConfig {
-    private String site;
-    private String title;
-    private String description;
-    private String name;
-    private String domain;
-    private String property;
-    private Date date;
+    @NonNull private String site;
+    @NonNull private String title;
+    @NonNull private String domain;
+    @NonNull private String property;
+    @NonNull private Date date;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     private final ObjectMapper MAPPER;
@@ -33,19 +32,26 @@ public class SiteConfig {
      * Constructor
      * @param site
      * @param title
-     * @param description
-     * @param name
      * @param domain
      * @param property
      */
-    SiteConfig(String site, String title, String description, String name, String domain, String property) {
+    SiteConfig(String site, String title, String domain, String property, Date date) {
         this();
+        if(site.isEmpty())
+            throw new IllegalArgumentException("Site can't be empty");
+        if(title.isEmpty())
+            throw new IllegalArgumentException("Title can't be empty");
+        if(domain.isEmpty())
+            throw new IllegalArgumentException("Domain can't be empty");
+        if(property.isEmpty())
+            throw new IllegalArgumentException("Property can't be empty");
+        if(date ==  null)
+            throw new IllegalArgumentException("Date can't be empty");
         this.site = site;
         this.title = title;
-        this.description = description;
-        this.name = name;
         this.domain = domain;
         this.property = property;
+        this.date = date;
     }
 
     /**
@@ -63,11 +69,8 @@ public class SiteConfig {
      * @return une string avec la config
      */
     public String toString(){
-        StringBuilder sb = new StringBuilder();
         return "site: " + site + "\n"
                 + "title: " + title + "\n"
-                + "description: " + description + "\n"
-                + "name: " + name + "\n"
                 + "domain: " + domain + "\n"
                 + "property: " + property + "\n"
                 + "date_of_creation: " + date + "\n"
@@ -81,6 +84,7 @@ public class SiteConfig {
      * @throws IOException
      */
     public static SiteConfig loadFromDocument(Path filePath) throws IOException {
+
         SiteConfig sc = new SiteConfig();
         return sc.MAPPER.readValue(new File(filePath.toString()), SiteConfig.class);
     }
