@@ -2,6 +2,8 @@ package ch.heigvd.statique.config;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -42,7 +44,7 @@ class SiteConfigTest {
     }
 
     @Test
-    public void setterWithNullArgumentShouldThrow(){
+    public void setterWithNullArgumentShouldThrow() throws IOException {
         SiteConfig sc = new SiteConfig("a", "a", "a", "a", new Date());
         assertThrows(NullPointerException.class, () -> {
             sc.setTitle(null);
@@ -60,4 +62,6 @@ class SiteConfigTest {
             sc.setDate(null);
         });
     }
+
+
 }

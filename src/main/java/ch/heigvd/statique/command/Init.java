@@ -1,5 +1,6 @@
 package ch.heigvd.statique.command;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
@@ -13,6 +14,7 @@ public class Init implements Callable<Integer> {
 
     //path to init directory
     @CommandLine.Parameters(paramLabel = "Directory", description = "Directory to initialize site in")
+    private
     String path;
 
     //Option to indicate if we have to overwrite existing files
@@ -25,37 +27,49 @@ public class Init implements Callable<Integer> {
         //check if last char is a / to add it to indicate it is a directory
         if (path.charAt(path.length()-1) != '/')
             path+='/';
-        path =  System.getProperty("user.dir")+ '/' + path;
-
-        //Create the directory hierarchy from arguments given to command if it does not exists.
-        File directory = new File(path);
-        if(!directory.exists()) {
-            if (directory.mkdirs())
-                System.out.println("Created directory: " + path);
-            else
-                System.out.println("Failed to create the directory, using the existing one");
-        }
-
-        File config = new File(path + "config.yaml");
-        File index = new File(path + "index.md");
-        // create the config file if it does not exists.
-        if((config.exists() && overwrite) || createFile(config)){
-            SiteConfig sc1 = new SiteConfig();
-            sc1.writeConfiguration(Paths.get(config.getPath()));
-        } else {
-            System.out.println("Configuration failed.");
-            return 1;
-        }
-
-        // create the md file if it does not exists.
-        if(!createFile(index) && !overwrite){
-            System.out.println("Configuration failed.");
-            return 1;
-        }
+        Path cleanPath = Paths.get(System.getProperty("user.dir")+ '/' + path);
+        createDirectory(new File(cleanPath.toString()));
+        createConfigFiles(cleanPath, overwrite);
         System.out.println("Configuration successful.");
         return 0;
     }
 
+    private static boolean createConfigFiles(Path path, boolean overwrite) throws IOException {
+        File config = new File(path.toString() + "/" + "config.yaml");
+        File index = new File(path.toString() +  "/" + "index.md");
+        if(config.exists() || index.exists())
+            if(overwrite){
+                SiteConfig sc1 = new SiteConfig();
+                sc1.writeConfiguration(Paths.get(config.getPath()));
+                System.out.println("Config files overwritten");
+                return true;
+            } else {
+                System.out.println("can't create config files, they already exist, checkout -O option");
+                return false;
+            }
+        else{
+            createFile(config);
+            SiteConfig sc1 = new SiteConfig();
+            sc1.writeConfiguration(Paths.get(config.getPath()));
+            createFile(index);
+            System.out.println("Config files created");
+            return true;
+        }
+    }
+
+    private static boolean createDirectory(File directory){
+        if(!directory.exists()) {
+            if (directory.mkdirs()) {
+                System.out.println("Created directory: " + directory.getPath());
+                return true;
+            }else {
+                System.out.println("Failed to create the directory, using the existing one");
+                return false;
+            }
+        }
+        System.out.println("Directory already exists");
+        return false;
+    }
 
     /**
      * Create a file if it does not exists
@@ -63,7 +77,7 @@ public class Init implements Callable<Integer> {
      * @return true if the file was successfuly created
      * @throws IOException
      */
-    public static boolean createFile(File toCreate) throws IOException {
+    private static boolean createFile(File toCreate) throws IOException {
 
         if (!toCreate.createNewFile()) {
             System.out.println("Failed to create " + toCreate.getName() + ", already exists");

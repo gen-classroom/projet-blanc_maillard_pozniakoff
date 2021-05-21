@@ -15,14 +15,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Getter
-@Setter
+
 public class SiteConfig {
-    @NonNull private String site;
-    @NonNull private String title;
-    @NonNull private String domain;
-    @NonNull private String property;
-    @NonNull private Date date;
+    @Getter @Setter @NonNull
+    private String site;
+    @Getter @Setter @NonNull
+    private String title;
+    @Getter @Setter @NonNull
+    private String domain;
+    @Getter @Setter @NonNull
+    private String property;
+    @Getter @Setter @NonNull
+    private Date date;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
     private final ObjectMapper MAPPER;
@@ -46,6 +50,7 @@ public class SiteConfig {
             throw new IllegalArgumentException("Property can't be empty");
         if(date ==  null)
             throw new IllegalArgumentException("Date can't be empty");
+
         this.site = site;
         this.title = title;
         this.domain = domain;
@@ -56,14 +61,18 @@ public class SiteConfig {
         MAPPER = new ObjectMapper(YF);
         MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
         MAPPER.setDateFormat(DATE_FORMAT);
+
+
     }
 
     /**
-     * Constructor
+     * Default constructor
      */
     public SiteConfig() {
+
         this("www.myStaticSite.ch", "My Static Site",
                 "My Domain", "The properties of my static site", new Date());
+
     }
 
 
@@ -75,7 +84,7 @@ public class SiteConfig {
                 + "title: " + title + "\n"
                 + "domain: " + domain + "\n"
                 + "property: " + property + "\n"
-                + "date_of_creation: " + date + "\n"
+                + "date: " + date + "\n"
                 ;
     }
 
@@ -97,7 +106,7 @@ public class SiteConfig {
      * @throws IOException
      */
     public void writeConfiguration(Path filePath) throws IOException{
-        MAPPER.writeValue(new File(filePath.toString()), this);
+        MAPPER.writeValue(filePath.toFile(), this);
     }
 }
 
