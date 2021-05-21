@@ -9,10 +9,6 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SiteConfigTest {
-    @Test
-    public void testingTest(){
-        assertTrue(true);
-    }
 
     @Test
     public void oneNullArgumentShouldThrow(){
