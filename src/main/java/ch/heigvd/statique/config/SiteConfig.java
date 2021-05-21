@@ -36,7 +36,6 @@ public class SiteConfig {
      * @param property
      */
     SiteConfig(String site, String title, String domain, String property, Date date) {
-        this();
         if(site.isEmpty())
             throw new IllegalArgumentException("Site can't be empty");
         if(title.isEmpty())
@@ -52,16 +51,19 @@ public class SiteConfig {
         this.domain = domain;
         this.property = property;
         this.date = date;
+
+        YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
+        MAPPER = new ObjectMapper(YF);
+        MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
+        MAPPER.setDateFormat(DATE_FORMAT);
     }
 
     /**
      * Constructor
      */
     public SiteConfig() {
-        YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-        MAPPER = new ObjectMapper(YF);
-        MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
-        MAPPER.setDateFormat(DATE_FORMAT);
+        this("www.myStaticSite.ch", "My Static Site",
+                "My Domain", "The properties of my static site", new Date());
     }
 
 
