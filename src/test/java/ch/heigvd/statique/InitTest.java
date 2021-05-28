@@ -1,6 +1,5 @@
 package ch.heigvd.statique;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ch.heigvd.statique.command.Init;
@@ -12,12 +11,8 @@ import java.nio.file.Paths;
 
 class InitTest {
 
-    Path testFilesPath = Paths.get(System.getProperty("user.dir")+ "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
+    Path testFilesPath = Paths.get( "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
 
-    @Test
-    void testingTest(){
-        assertTrue(true);
-    }
 
     @Test
     void createFileShouldNotWorkIfFileExists() throws IOException {
