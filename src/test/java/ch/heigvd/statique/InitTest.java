@@ -1,5 +1,6 @@
 package ch.heigvd.statique;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import ch.heigvd.statique.command.Init;
@@ -49,9 +50,11 @@ class InitTest {
 
     @Test
     void createConfigFileShouldWorkIfConfigDontExist() throws IOException {
+        Init.createDirectory(new File(testFilesPath.toString()));
         assertTrue(Init.createConfigFiles(testFilesPath, false));
         new File(testFilesPath.toString() + "\\config.yaml").delete();
         new File(testFilesPath.toString() + "\\index.md").delete();
+        new File(testFilesPath.toString()).delete();
     }
 
     @Test
