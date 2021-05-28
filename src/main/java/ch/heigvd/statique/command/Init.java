@@ -34,7 +34,7 @@ public class Init implements Callable<Integer> {
         return 0;
     }
 
-    private static boolean createConfigFiles(Path path, boolean overwrite) throws IOException {
+    public static boolean createConfigFiles(Path path, boolean overwrite) throws IOException {
         File config = new File(path.toString() + "/" + "config.yaml");
         File index = new File(path.toString() +  "/" + "index.md");
         if(config.exists() || index.exists())
@@ -57,7 +57,7 @@ public class Init implements Callable<Integer> {
         }
     }
 
-    private static boolean createDirectory(File directory){
+    public static boolean createDirectory(File directory){
         if(!directory.exists()) {
             if (directory.mkdirs()) {
                 System.out.println("Created directory: " + directory.getPath());
@@ -77,7 +77,7 @@ public class Init implements Callable<Integer> {
      * @return true if the file was successfuly created
      * @throws IOException
      */
-    private static boolean createFile(File toCreate) throws IOException {
+    public static boolean createFile(File toCreate) throws IOException {
 
         if (!toCreate.createNewFile()) {
             System.out.println("Failed to create " + toCreate.getName() + ", already exists");

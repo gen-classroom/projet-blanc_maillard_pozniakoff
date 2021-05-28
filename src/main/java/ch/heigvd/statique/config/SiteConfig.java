@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class SiteConfig {
@@ -72,7 +73,6 @@ public class SiteConfig {
 
         this("www.myStaticSite.ch", "My Static Site",
                 "My Domain", "The properties of my static site", new Date());
-
     }
 
 
@@ -107,6 +107,18 @@ public class SiteConfig {
      */
     public void writeConfiguration(Path filePath) throws IOException{
         MAPPER.writeValue(filePath.toFile(), this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SiteConfig that = (SiteConfig) o;
+        return Objects.equals(getSite(), that.getSite()) &&
+                Objects.equals(getTitle(), that.getTitle()) &&
+                Objects.equals(getDomain(), that.getDomain()) &&
+                Objects.equals(getProperty(), that.getProperty()) &&
+                Objects.equals(getDate(), that.getDate());
     }
 }
 
