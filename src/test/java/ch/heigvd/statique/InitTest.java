@@ -11,12 +11,15 @@ import java.nio.file.Paths;
 
 class InitTest {
 
-    Path testFilesPath = Paths.get( "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
+    Path testFilesPath = Paths.get( System.getProperty("user.dir") + "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
 
 
     @Test
     void createFileShouldNotWorkIfFileExists() throws IOException {
-        assertFalse(Init.createFile(new File(testFilesPath.toString() + "\\existingFile")));
+        File f = new File(testFilesPath.toString() + "\\existingFile");
+        Init.createFile(f);
+        assertFalse(Init.createFile(f));
+        f.delete();
     }
 
     @Test
@@ -29,7 +32,11 @@ class InitTest {
 
     @Test
     void createDirectoryShouldNotWorkIfDirectoryExists() throws IOException {
-        assertFalse(Init.createDirectory(new File(testFilesPath.toString())));
+        File f = new File(testFilesPath.toString());
+        f.delete();
+        Init.createDirectory(f);
+        assertFalse(Init.createDirectory(f));
+        f.delete();
     }
 
     @Test
@@ -53,6 +60,7 @@ class InitTest {
         assertFalse(Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false));
         new File(testFilesPath.toString() + "\\config.yaml").delete();
         new File(testFilesPath.toString() + "\\index.md").delete();
+        new File(Paths.get(testFilesPath +"\\config").toString()).delete();
     }
 
     @Test
@@ -62,5 +70,6 @@ class InitTest {
         assertTrue(Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), true));
         new File(testFilesPath.toString() + "\\config.yaml").delete();
         new File(testFilesPath.toString() + "\\index.md").delete();
+        new File(Paths.get(testFilesPath +"\\config").toString()).delete();
     }
 }
