@@ -49,11 +49,18 @@ class InitTest {
 
     @Test
     void createConfigFilesShouldNotWorkIfConfigExists() throws IOException {
+        Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false);
         assertFalse(Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false));
+        new File(testFilesPath.toString() + "\\config.yaml").delete();
+        new File(testFilesPath.toString() + "\\index.md").delete();
     }
 
     @Test
     void createConfigFilesShouldWorkIfConfigExistsAndOptionOverwrite() throws IOException {
+        Init.createDirectory(new File(testFilesPath +"\\config"));
+        Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false);
         assertTrue(Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), true));
+        new File(testFilesPath.toString() + "\\config.yaml").delete();
+        new File(testFilesPath.toString() + "\\index.md").delete();
     }
 }
