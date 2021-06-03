@@ -7,7 +7,7 @@ import org.commonmark.renderer.html.AttributeProvider;
 
 import java.util.Map;
 
-class PAttributeProvider implements AttributeProvider {
+public class PAttributeProvider implements AttributeProvider {
     @Override
     public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
         if (node instanceof Image) {
