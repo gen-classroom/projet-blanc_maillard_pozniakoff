@@ -2,14 +2,19 @@ package ch.heigvd.statique.command;
 
 import java.io.File;
 import java.util.concurrent.Callable;
+
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "clean", description = "Clean a static site")
 public class Clean implements Callable<Integer> {
 
+  @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to clean")
+  String path;
+
   @Override public Integer call() {
 
-    String currentPath = System.getProperty("user.dir") + "/myStaticSite";
+    String currentPath = System.getProperty("user.dir") + path;
     String buildPath = currentPath + "/build";
 
     final File myStaticSite = new File(currentPath);
