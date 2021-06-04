@@ -14,7 +14,7 @@ Ce générateur de site statique permet de générer des pages webs à partir de
 
 ## Installation
 
-1. Téléchargez le fichier statique.zip
+1. Téléchargez le fichier release.zip
 	  * Ce fichier se trouve dans la release
 2. Dézippez le fichier zip dans votre arborescence de travail
 	  * Cette arborescence contiendra vos pages web
@@ -71,3 +71,12 @@ mvn clean install
 ```
 
 Si vous souhaitez modifier notre code, sentez-vous libre de forker ce repo.
+
+## Code coverage avec jacoco
+
+Après le ``mvn clean install``, vous devriez avoir un dossier target. Pour consulter le code coverage, rendez vous à :
+
+projet-blanc_maillard_pozniakoff/target/site/jacoco
+
+Ceci fait vous devriez trouver un fichier ``index.html``. Celui-ci contient tous les détails de la couverture que nos tests font du code.
+
