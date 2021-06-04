@@ -14,7 +14,7 @@ Ce générateur de site statique permet de générer des pages webs à partir de
 
 ## Installation
 
-1. Téléchargez le fichier statique.zip
+1. Téléchargez le fichier release.zip
 	  * Ce fichier se trouve dans la release
 2. Dézippez le fichier zip dans votre arborescence de travail
 	  * Cette arborescence contiendra vos pages web
