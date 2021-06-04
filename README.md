@@ -18,24 +18,25 @@ Ce générateur de site statique permet de générer des pages webs à partir de
 	  * Ce fichier se trouve dans la release
 2. Dézippez le fichier zip dans votre arborescence de travail
 	  * Cette arborescence contiendra vos pages web
-3. Ouvrez un terminal à l'endroit où se situe le script "statique"
-4. Tapez cette commande : ./statique init /monSiteStatique
+3. Ouvrez un terminal dans le dossier bin"
+4. Tapez cette commande : ``./statique init /monSiteStatique``
 5. Un dossier du nom de "monSiteStatique" a été créé et il contient un fichier mardown index.md qui sert d'exemple ainsi qu'un fichier config.yaml qui contient les configurations à rentrer
+6. Si une configuration existe déjà dans ce dossier vous pouvez utiliser l'option -O pour les écraser: ``./statique init -O /monSiteStatique``
 
 ## Compilation
 
-1. Tapez cette commande : ./statique build /monSiteStatique
+1. Tapez cette commande : ``./statique build /monSiteStatique``
 2. Cette commande va compiler les fichiers du dossier monSiteStatique et générer des pages html à partir des fichiers markdown
 3. un dossier build a été créé et à l'intérieur se trouve vos pages web
 
 ## Serveur HTTP
 
-1. Tapez cette commande : ./statique serve /monSiteStatique
-2. Vous pouvez maintenant accéder à vos pages web à cette addresse : 
+1. Tapez cette commande : ``./statique serve /monSiteStatique``
+2. La commande ouvrira vos page web dans un navigateur. 
 
 ## Suppression et nettoyage
 
-1. Tapez cette commande : ./statique clean /monSiteStatique
+1. Tapez cette commande : ``./statique clean /monSiteStatique``
 2. Cette commande va supprimez votre répertoire monSiteStatique
 
 ## Watch
@@ -44,14 +45,14 @@ Une option existe pour les commandes build et serve qui permet de re-charger les
 
 Tapez ces commandes pour expérimenter cette option : 
 
-* ./statique build --watch /monSiteStatique
-* ./statique serve --watch /monSiteStatique
+* ``./statique build --watch /monSiteStatique``
+* ``./statique serve --watch /monSiteStatique``
 
 ## Version
 
 Pour afficher la version actuelle du générateur de site statique, il faut taper cette commande : 
 
- ./statique --version
+ ``./statique --version``
 
 ## Compilation et modification du code
 
