@@ -12,49 +12,52 @@ Ce projet a été créé lors du cours de Génie Logiciel donné par Mr Bertil C
 
 Ce générateur de site statique permet de générer des pages webs à partir de fichiers markdown, de template. Il offre également une solution pour nettoyer les fichiers généré et effectuer des benchmarks des performances de notre logiciel.
 
-## Table des matières
-
-
-
 ## Installation
 
 1. Téléchargez le fichier statique.zip
 2. Dézippez le fichier zip dans votre arborescence de travail
   * Cette arborescence contiendra vos pages web
 3. Ouvrez un terminal à l'endroit où se situe le script "statique"
-4. Tapez cette commande : java -jar xxxx.jar init /monSiteStatique
+4. Tapez cette commande : ./statique init /monSiteStatique
 5. Un dossier du nom de "monSiteStatique" a été créé et il contient un fichier mardown index.md qui sert d'exemple ainsi qu'un fichier config.yaml qui contient les configurations à rentrer
-
-
 
 ## Compilation
 
-1. Tapez cette commande : java -jar xxxx.jar build /monSiteStatique
+1. Tapez cette commande : ./statique build /monSiteStatique
 2. Cette commande va compiler les fichiers du dossier monSiteStatique et générer des pages html à partir des fichiers markdown
 3. un dossier build a été créé et à l'intérieur se trouve vos pages web
 
 ## Serveur HTTP
 
-1. Tapez cette commande : java -jar xxxx.jar serve /monSiteStatique
+1. Tapez cette commande : ./statique serve /monSiteStatique
 2. Vous pouvez maintenant accéder à vos pages web à cette addresse : 
 
 ## Suppression et nettoyage
 
-1. Tapez cette commande : java -jar xxxx.jar clean /monSiteStatique
+1. Tapez cette commande : ./statique clean /monSiteStatique
 2. Cette commande va supprimez votre répertoire monSiteStatique
+
+## Watch
+
+Une option existe pour les commandes build et serve qui permet de re-charger les fichiers HTML lors de modification du fichier markdown
+
+Tapez ces commandes pour expérimenter cette option : 
+
+* ./statique build --watch /monSiteStatique
+* ./statique serve --watch /monSiteStatique
 
 ## Version
 
 Pour afficher la version actuelle du générateur de site statique, il faut taper cette commande : 
 
- java -jar xxxx.jar --version
+ ./statique --version
 
 ## Compilation et modification du code
 
-Voici la liste des commandes maven à taper pour générer un nouveau fichier .jar
+Voici la commande maven à taper pour générer un nouveau script statique
 
 ```
-
+mvn clean install
 ```
 
-Si vous souhaitez modifier notre code, sentez-vous libre de forker ce repo, git hub actions est également configurez pour générer une nouvelle release à chaque commit.
+Si vous souhaitez modifier notre code, sentez-vous libre de forker ce repo.
