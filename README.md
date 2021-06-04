@@ -15,8 +15,9 @@ Ce générateur de site statique permet de générer des pages webs à partir de
 ## Installation
 
 1. Téléchargez le fichier statique.zip
+	  * Ce fichier se trouve dans la release
 2. Dézippez le fichier zip dans votre arborescence de travail
-  * Cette arborescence contiendra vos pages web
+	  * Cette arborescence contiendra vos pages web
 3. Ouvrez un terminal à l'endroit où se situe le script "statique"
 4. Tapez cette commande : ./statique init /monSiteStatique
 5. Un dossier du nom de "monSiteStatique" a été créé et il contient un fichier mardown index.md qui sert d'exemple ainsi qu'un fichier config.yaml qui contient les configurations à rentrer
