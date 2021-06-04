@@ -82,8 +82,8 @@ public class Build implements Callable<Integer> {
           build = new File(buildPath);
           build.mkdirs();
           buildStaticSite(build.getParentFile(), currentPath);
+          watchKey.reset();
         }
-        watchKey.reset();
       }
     }
     return 1;

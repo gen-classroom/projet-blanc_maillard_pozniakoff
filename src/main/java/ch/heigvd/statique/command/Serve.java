@@ -75,8 +75,8 @@ public class Serve implements Callable<Integer> {
           catch (Exception e){
             e.printStackTrace();
           }
+          watchKey.reset();
         }
-        watchKey.reset();
       }
     }
 
