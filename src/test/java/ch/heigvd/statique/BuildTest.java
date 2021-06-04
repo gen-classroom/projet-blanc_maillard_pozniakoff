@@ -1,6 +1,7 @@
 package ch.heigvd.statique;
 
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
@@ -11,9 +12,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BuildTest {
+
+    @AfterEach
+    public void tearDown() throws IOException {
+        FileUtils.deleteDirectory(new File("./monStaticSite"));
+    }
 
     @Test
     public void buildEmptyPath(){
@@ -27,7 +34,7 @@ class BuildTest {
         cmd.execute(args);
 
         File index = new File("./build/index.html");
-        assertTrue(index.exists());
+        assertFalse(index.exists());
     }
 
     @Test
@@ -40,16 +47,13 @@ class BuildTest {
         args = new String[]{"build", "/myStaticSite"};
         cmd.execute(args);
 
-        File configYaml = new File("/myStaticSite/build/config.yaml");
-        File indexMd = new File("/myStaticSite/build/index.md");
-        File indexHtml = new File("/myStaticSite/build/index.html");
-        File templateFolder = new File("/myStaticSite/build/templateFolder");
+        File configYaml = new File(System.getProperty("user.dir") + "/myStaticSite/config.yaml");
+        File indexMd = new File(System.getProperty("user.dir") + "/myStaticSite/build/index.html");
+        File indexHtml = new File(System.getProperty("user.dir") +"/myStaticSite/index.md");
 
-        assertTrue(!configYaml.exists());
-        assertTrue(!indexHtml.exists());
-        assertTrue(!indexMd.exists());
-        assertTrue(templateFolder.exists());
+        assertTrue(configYaml.exists());
+        assertTrue(indexHtml.exists());
+        assertTrue(indexMd.exists());
 
-        FileUtils.deleteDirectory(new File("./monStaticSite"));
    }
 }

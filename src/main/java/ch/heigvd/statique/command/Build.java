@@ -93,7 +93,7 @@ public class Build implements Callable<Integer> {
   {
     try
     {
-      FileTemplateLoader loader = new FileTemplateLoader(new File(build.getPath() + "/templates/"));
+      FileTemplateLoader loader = new FileTemplateLoader(new File(System.getProperty("user.dir") + "/templates/"));
       loader.setSuffix(".html");
       Handlebars handlebars = new Handlebars(loader);
       handlebars.setPrettyPrint(true);

@@ -1,6 +1,9 @@
 package ch.heigvd.statique;
 
+import com.github.jknack.handlebars.internal.antlr.misc.Utils;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 
@@ -11,11 +14,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CleanTest {
 
-    private static final String path = "/test";
+    String path = "/site";
+    File site;
+    File build;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        site = new File("." + path);
+        build = new File("." + path + "/build");
+
+        site.mkdirs();
+        build.mkdirs();
+    }
+
+    @AfterEach
+    void tearDown() throws IOException {
+        FileUtils.deleteDirectory(site);
+    }
 
     @Test
     public void nonValidPath(){
@@ -29,21 +49,17 @@ class CleanTest {
 
     @Test
     public void correctClean() throws IOException {
-        Callable<Integer> callable = new Statique();
-        CommandLine cmd = new CommandLine(callable);
+       assertTrue(Files.exists(site.toPath()));
+       assertTrue(Files.exists(build.toPath()));
 
-        String[] args = new String[]{"clean", "/myStaticSite"};
+       Callable<Integer> callable = new Statique();
+       CommandLine cmd = new CommandLine(callable);
 
-        Path path = Paths.get("/myStaticSite/build");
-        Files.createDirectories(path);
+       String[] args = new String[]{"clean", path};
 
-        cmd.execute(args);
+       cmd.execute(args);
 
-        boolean result = false;
-        File testFolder = new File("/myStaticSite/build");
-
-        assertTrue(!testFolder.exists());
-
-        FileUtils.deleteDirectory(new File("./myStaticSite"));
+       assertFalse(Files.exists(build.toPath()));
+       assertFalse(Files.exists(site.toPath()));
     }
 }
