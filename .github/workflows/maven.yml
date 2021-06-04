@@ -21,6 +21,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Continuous delivery
-      run: mvn deploy
+    - name: Continuous Integration test
+      run: mvn clean test
         
