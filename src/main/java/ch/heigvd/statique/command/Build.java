@@ -14,6 +14,7 @@ import java.util.concurrent.Callable;
 
 import ch.heigvd.statique.config.Article;
 import ch.heigvd.statique.config.SiteConfig;
+import org.apache.commons.lang3.SystemUtils;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -38,10 +39,19 @@ public class Build implements Callable<Integer> {
   String path;
 
   /**
-   * Option to watch the build folder
+   * -t : option for the build command
+   * If specified, the build command will use templates
+   */
+  @CommandLine.Option(names = "-t", description = "use templates that are in the template folder")
+  private boolean templating;
+
+  /**
+   * --watch : Option to watch the build folder
+   * If specified, the build command will watch changes in the markdown files
    */
   @CommandLine.Option(names = "--watch", description = "Watch option")
   Boolean watch = false;
+
 
   /**
    * The build directory
@@ -68,7 +78,11 @@ public class Build implements Callable<Integer> {
 
     build = new File(buildPath);
     build.mkdirs();
+
+    System.out.println("Started building HTML files");
     buildStaticSite(build.getParentFile(), currentPath);
+    System.out.println("Finished building HTML files");
+    System.out.println("You can find your web pages in " + buildPath);
 
     Path watchPath = Paths.get(currentPath);
     WatchService watchService =  watchPath.getFileSystem().newWatchService();
@@ -99,7 +113,8 @@ public class Build implements Callable<Integer> {
     if(dir != null){
       File[] listFiles = dir.listFiles();
       if(listFiles != null){
-        createLayoutTemplate();
+        if(templating)
+          createLayoutTemplate();
         for(File file : listFiles){
           String filename = file.getName();
           if(file.isDirectory() && !filename.equals("build")){
@@ -109,7 +124,7 @@ public class Build implements Callable<Integer> {
           }
           else if(FilenameUtils.getExtension(filename).equals("md")){
             MDToHTML translator = new MDToHTML();
-            String contentFileHTML = translator.MDtoHTML(path + "/" + filename);
+            String content = translator.MDtoHTML(path + "/" + filename);
             String htmlPath = path + "/build/" + FilenameUtils.removeExtension(filename) + ".html";
 
             Path pathConfig = Paths.get(System.getProperty("user.dir") + "/" + this.path + "/config.yaml");
@@ -118,12 +133,13 @@ public class Build implements Callable<Integer> {
             String siteTitre = sc.getSite();
             String pageTitre = sc.getTitle();
 
-            Article article = new Article(siteTitre,pageTitre,contentFileHTML);
+            Article article = new Article(siteTitre,pageTitre,content);
 
-            String contentTemplate = unescapeHtml4(layout.apply(article));
+            if(templating)
+              content = unescapeHtml4(layout.apply(article));
 
             FileWriter writer = new FileWriter(htmlPath);
-            writer.write(contentTemplate);
+            writer.write(content);
             writer.close();
 
           }
