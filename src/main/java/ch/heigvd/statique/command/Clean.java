@@ -12,9 +12,17 @@ import picocli.CommandLine.Command;
 @Command(name = "clean", description = "Clean a static site")
 public class Clean implements Callable<Integer> {
 
+  /**
+   * Parameter for the clean command
+   * Specifies the folder to clean
+   */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to clean")
   String path;
 
+  /**
+   * Main routine for the clean command
+   * @return 1 if successful
+   */
   @Override public Integer call() {
 
     String currentPath = System.getProperty("user.dir") + path;
@@ -27,8 +35,11 @@ public class Clean implements Callable<Integer> {
   }
 
 
-
-
+  /**
+   * Deletes the directory (recursively)
+   * @param directoryToBeDeleted directory to be deleted
+   * @return 1 if successful
+   */
   boolean deleteDirectory(File directoryToBeDeleted) {
     File[] allContents = directoryToBeDeleted.listFiles();
     if (allContents != null) {

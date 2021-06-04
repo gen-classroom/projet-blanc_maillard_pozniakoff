@@ -10,12 +10,23 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
+/**
+ * The serve command to visualize the static site in a Web browser
+ */
 @Command(name = "serve", description = "Serve a static site")
 public class Serve implements Callable<Integer> {
 
+  /**
+   * Parameter for the serve command
+   * Specifies the folder containing the html files
+   */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder with content")
   String path;
 
+  /**
+   * Main routine for the serve command
+   * @return 1 if successful
+   */
   @Override public Integer call() {
     String currentPath = System.getProperty("user.dir") + "/" + path;
 
