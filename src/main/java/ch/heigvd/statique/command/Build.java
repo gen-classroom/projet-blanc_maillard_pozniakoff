@@ -17,27 +17,40 @@ import org.apache.commons.io.FilenameUtils;
 
 import ch.heigvd.statique.config.MDToHTML;
 
-import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
-import com.github.jknack.handlebars.context.MapValueResolver;
-import com.github.jknack.handlebars.internal.text.StringEscapeUtils;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
+/**
+ *
+ */
+
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
+  /**
+   * The name of the directory to initialize the site, from the directory the command is typed in.
+   */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to initialize site in")
   String path;
 
-  //répertoire build
+  /**
+   * The build directory
+   */
   private File build;
 
-  //fichier layout du template
+  /**
+   *
+   */
   private Template layout;
 
+  /**
+   * Call method for the build command
+   * @return 1 if successful
+   * @throws IOException
+   */
   @Override
   public Integer call() throws IOException {
 
@@ -47,12 +60,18 @@ public class Build implements Callable<Integer> {
     build = new File(buildPath);
     build.mkdirs();
 
-    buildSiteStatique(build, buildPath);
+    buildStaticSite(build, buildPath);
 
     return 1;
   }
 
-  private void buildSiteStatique(File dir, String path) throws IOException {
+  /**
+   * Routine to create html files
+   * @param dir directory with the .md files
+   * @param path path for the created files
+   * @throws IOException if the files could not be created
+   */
+  private void buildStaticSite(File dir, String path) throws IOException {
     if(dir != null){
       File[] listFiles = dir.listFiles();
       if(listFiles != null){
@@ -62,7 +81,7 @@ public class Build implements Callable<Integer> {
           if(file.isDirectory() && !filename.equals("build")){
             Path newPath = Paths.get(path + "/" + filename);
             new File(String.valueOf(newPath)).mkdirs();
-            buildSiteStatique(file, String.valueOf(newPath));
+            buildStaticSite(file, String.valueOf(newPath));
           }
           else if(FilenameUtils.getExtension(filename).equals("md")){
             MDToHTML translator = new MDToHTML();
@@ -89,6 +108,9 @@ public class Build implements Callable<Integer> {
     }
   }
 
+  /**
+   *
+   */
   private void createLayoutTemplate()
   {
     try
