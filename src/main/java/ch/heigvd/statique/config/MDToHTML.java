@@ -36,6 +36,7 @@ public class MDToHTML {
         HtmlRenderer renderer = HtmlRenderer.builder().
                 attributeProviderFactory(attributeProviderContext -> new PAttributeProvider()).
                 build();
+        br.close();
         return renderer.render(document);
     }
 
