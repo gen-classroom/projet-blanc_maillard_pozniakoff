@@ -60,5 +60,36 @@ class SiteConfigTest {
         });
     }
 
+    @Test
+    void checkIfEqualsWorks(){
+        Date date = new Date();
+        SiteConfig sc1 = new SiteConfig("a", "a", "a", "a", date);
+        SiteConfig sc2 = new SiteConfig("a", "a", "a", "a", date);
+        SiteConfig sc3 = new SiteConfig("b", "a", "a", "a", date);
+        assertEquals(sc1, sc2);
+        assertNotEquals(sc1, sc3);
+    }
+
+    @Test
+    void checkEqualsOnObjectEqualsHimself(){
+        Date date = new Date();
+        SiteConfig sc1 = new SiteConfig("a", "a", "a", "a", date);
+        assertEquals(sc1, sc1);
+    }
+
+    @Test
+    void checkEqualsWithNullObject(){
+        Date date = new Date();
+        SiteConfig sc1 = new SiteConfig("a", "a", "a", "a", date);
+        assertNotEquals(sc1, null);
+    }
+
+    @Test
+    void checkEqualsWithDifferentObject(){
+        Date date = new Date();
+        SiteConfig sc1 = new SiteConfig("a", "a", "a", "a", date);
+        assertNotEquals(sc1, new Integer(1));
+    }
+
 
 }
