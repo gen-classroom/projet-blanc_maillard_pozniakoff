@@ -12,8 +12,12 @@ import java.nio.file.Paths;
 
 class InitTest {
 
-    Path testFilesPath = Paths.get( System.getProperty("user.dir") + "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
-
+    Path testFilesPath;
+    @BeforeEach
+    private void initPath() {
+        testFilesPath = Paths.get(System.getProperty("user.dir") + "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
+        testFilesPath.toFile().mkdir();
+    }
 
     @Test
     void createFileShouldNotWorkIfFileExists() throws IOException {
@@ -58,15 +62,17 @@ class InitTest {
         new File(newPath.toString() + "\\config.yaml").delete();
         new File(newPath.toString() + "\\index.md").delete();
         newPath.toFile().delete();
+        testFilesPath.toFile().delete();
     }
 
     @Test
     void createConfigFilesShouldNotWorkIfConfigExists() throws IOException {
         Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false);
         assertFalse(Init.createConfigFiles(Paths.get(testFilesPath +"\\config"), false));
-        new File(testFilesPath.toString() + "\\config.yaml").delete();
-        new File(testFilesPath.toString() + "\\index.md").delete();
+        new File(testFilesPath.toString() + "\\config\\config.yaml").delete();
+        new File(testFilesPath.toString() + "\\config\\index.md").delete();
         new File(Paths.get(testFilesPath +"\\config").toString()).delete();
+        testFilesPath.toFile().delete();
     }
 
     @Test
@@ -77,5 +83,6 @@ class InitTest {
         new File(testFilesPath.toString() + "\\config.yaml").delete();
         new File(testFilesPath.toString() + "\\index.md").delete();
         new File(Paths.get(testFilesPath +"\\config").toString()).delete();
+        testFilesPath.toFile().delete();
     }
 }
