@@ -103,7 +103,7 @@ public class Init implements Callable<Integer> {
         File index = new File(path.toString() +  "/" + "index.md");
         if(config.exists() || index.exists())
             if(overwrite){
-               writeDefaultConfigFiles(config, index);
+                writeDefaultConfigFiles(config, index);
                 System.out.println("Config files overwritten");
                 return true;
             } else {
@@ -139,14 +139,9 @@ public class Init implements Callable<Integer> {
      * @return true si le dossier a été créé, false sinon
      */
     public static boolean createDirectory(File directory){
-        if(!directory.exists()) {
-            if (directory.mkdirs()) {
-                System.out.println("Created directory: " + directory.getPath());
-                return true;
-            }else {
-                System.out.println("Failed to create the directory, using the existing one");
-                return false;
-            }
+        if (directory.mkdirs()) {
+            System.out.println("Created directory: " + directory.getPath());
+            return true;
         }
         System.out.println("Directory already exists");
         return false;
