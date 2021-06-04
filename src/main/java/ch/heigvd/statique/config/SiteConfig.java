@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.File;
@@ -13,16 +14,19 @@ import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
-@Getter
-@Setter
+
 public class SiteConfig {
+    @Getter @Setter @NonNull
     private String site;
+    @Getter @Setter @NonNull
     private String title;
-    private String description;
-    private String name;
+    @Getter @Setter @NonNull
     private String domain;
+    @Getter @Setter @NonNull
     private String property;
+    @Getter @Setter @NonNull
     private Date date;
 
     private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
@@ -33,29 +37,42 @@ public class SiteConfig {
      * Constructor
      * @param site
      * @param title
-     * @param description
-     * @param name
      * @param domain
      * @param property
      */
-    SiteConfig(String site, String title, String description, String name, String domain, String property) {
-        this();
+    SiteConfig(String site, String title, String domain, String property, Date date) {
+        if(site.isEmpty())
+            throw new IllegalArgumentException("Site can't be empty");
+        if(title.isEmpty())
+            throw new IllegalArgumentException("Title can't be empty");
+        if(domain.isEmpty())
+            throw new IllegalArgumentException("Domain can't be empty");
+        if(property.isEmpty())
+            throw new IllegalArgumentException("Property can't be empty");
+        if(date ==  null)
+            throw new IllegalArgumentException("Date can't be empty");
+
         this.site = site;
         this.title = title;
-        this.description = description;
-        this.name = name;
         this.domain = domain;
         this.property = property;
-    }
+        this.date = date;
 
-    /**
-     * Constructor
-     */
-    public SiteConfig() {
         YF.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
         MAPPER = new ObjectMapper(YF);
         MAPPER.enable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
         MAPPER.setDateFormat(DATE_FORMAT);
+
+
+    }
+
+    /**
+     * Default constructor
+     */
+    public SiteConfig() {
+
+        this("www.myStaticSite.ch", "My Static Site",
+                "My Domain", "The properties of my static site", new Date());
     }
 
 
@@ -63,14 +80,11 @@ public class SiteConfig {
      * @return une string avec la config
      */
     public String toString(){
-        StringBuilder sb = new StringBuilder();
         return "site: " + site + "\n"
                 + "title: " + title + "\n"
-                + "description: " + description + "\n"
-                + "name: " + name + "\n"
                 + "domain: " + domain + "\n"
                 + "property: " + property + "\n"
-                + "date_of_creation: " + date + "\n"
+                + "date: " + date + "\n"
                 ;
     }
 
@@ -81,6 +95,7 @@ public class SiteConfig {
      * @throws IOException
      */
     public static SiteConfig loadFromDocument(Path filePath) throws IOException {
+
         SiteConfig sc = new SiteConfig();
         return sc.MAPPER.readValue(new File(filePath.toString()), SiteConfig.class);
     }
@@ -91,7 +106,19 @@ public class SiteConfig {
      * @throws IOException
      */
     public void writeConfiguration(Path filePath) throws IOException{
-        MAPPER.writeValue(new File(filePath.toString()), this);
+        MAPPER.writeValue(filePath.toFile(), this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SiteConfig that = (SiteConfig) o;
+        return Objects.equals(getSite(), that.getSite()) &&
+                Objects.equals(getTitle(), that.getTitle()) &&
+                Objects.equals(getDomain(), that.getDomain()) &&
+                Objects.equals(getProperty(), that.getProperty()) &&
+                Objects.equals(getDate(), that.getDate());
     }
 }
 

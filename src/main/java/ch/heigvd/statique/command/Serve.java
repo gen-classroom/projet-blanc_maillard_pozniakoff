@@ -1,3 +1,8 @@
+/**
+ * The serve command to visualize the static site in a Web browser
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.command;
 
 import java.awt.*;
@@ -13,9 +18,17 @@ import picocli.CommandLine.Command;
 @Command(name = "serve", description = "Serve a static site")
 public class Serve implements Callable<Integer> {
 
+  /**
+   * Parameter for the serve command
+   * Specifies the folder containing the html files
+   */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder with content")
   String path;
 
+  /**
+   * Main routine for the serve command
+   * @return 1 if successful
+   */
   @Override public Integer call() {
     String currentPath = System.getProperty("user.dir") + "/" + path;
 
