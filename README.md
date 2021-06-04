@@ -71,3 +71,12 @@ mvn clean install
 ```
 
 Si vous souhaitez modifier notre code, sentez-vous libre de forker ce repo.
+
+## Code coverage avec jacoco
+
+Après le ``mvn clean install``, vous devriez avoir un dossier target. Pour consulter le code coverage, rendez vous à :
+
+projet-blanc_maillard_pozniakoff/target/site/jacoco
+
+Ceci fait vous devriez trouver un fichier ``index.html``. Celui-ci contient tous les détails de la couverture que nos tests font du code.
+
