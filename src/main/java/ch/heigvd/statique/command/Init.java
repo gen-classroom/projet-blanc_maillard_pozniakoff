@@ -1,3 +1,9 @@
+/**
+ * The init command for the static site generator
+ * Generates the config files
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.command;
 
 import java.nio.file.Paths;
@@ -8,18 +14,30 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import java.io.*;
 
+
 @Command(name = "init", description = "Initialize a static site directory")
 public class Init implements Callable<Integer> {
 
-    //path to init directory
+    /**
+     * Directory: Parameter for the init command
+     * Indicates the name of the directory to initialize the files in
+     */
     @CommandLine.Parameters(paramLabel = "Directory", description = "Directory to initialize site in")
     String path;
 
-    //Option to indicate if we have to overwrite existing files
+    /**
+     * -O : option for the init command
+     * If specified, the config files will be overwritten
+     */
     @CommandLine.Option(names = "-O", description = "Overwrite existing config")
     private
     boolean overwrite;
 
+    /**
+     * Main routine for the init command
+     * @return 1 if successful
+     * @throws Exception
+     */
     @Override
     public Integer call() throws Exception{
         //check if last char is a / to add it to indicate it is a directory
