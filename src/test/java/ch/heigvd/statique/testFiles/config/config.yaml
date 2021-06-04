@@ -1,0 +1,5 @@
+site: "www.myStaticSite.ch"
+title: "My Static Site"
+domain: "My Domain"
+property: "The properties of my static site"
+date: "04-06-2021"
