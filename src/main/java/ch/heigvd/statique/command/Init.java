@@ -1,3 +1,9 @@
+/**
+ * The init command for the static site generator
+ * Generates the config files
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.command;
 
 import java.nio.file.Paths;
@@ -9,10 +15,6 @@ import picocli.CommandLine.Command;
 import java.io.*;
 
 
-/**
- * The init command for the static site generator
- *
- */
 @Command(name = "init", description = "Initialize a static site directory")
 public class Init implements Callable<Integer> {
 

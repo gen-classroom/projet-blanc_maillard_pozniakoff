@@ -1,3 +1,8 @@
+/**
+ * The clean command to clean the files of a generated static site
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.command;
 
 import java.io.File;
@@ -6,9 +11,6 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-/**
- * The clean command
- */
 @Command(name = "clean", description = "Clean a static site")
 public class Clean implements Callable<Integer> {
 

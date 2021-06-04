@@ -1,3 +1,8 @@
+/**
+ * The build command to build the static site
+ * @authors: Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.command;
 
 import java.io.File;
@@ -23,9 +28,6 @@ import com.github.jknack.handlebars.io.FileTemplateLoader;
 
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
-/**
- * The build command to build the static site
- */
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
