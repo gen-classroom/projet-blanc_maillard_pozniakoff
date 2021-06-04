@@ -5,10 +5,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
+    tags:
+      - 'release*'
 jobs:
   build:
 
@@ -20,8 +18,6 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'adopt'
-        
-    -name: "Install"
-     run: |
-      mvn -B clean install --file pom.xml
+        distribution: 'adopt'        
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
