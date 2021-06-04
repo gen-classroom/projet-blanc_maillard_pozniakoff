@@ -29,6 +29,14 @@ Ce générateur de site statique permet de générer des pages webs à partir de
 2. Cette commande va compiler les fichiers du dossier monSiteStatique et générer des pages html à partir des fichiers markdown
 3. un dossier build a été créé et à l'intérieur se trouve vos pages web
 
+Il est possible d'ajouter l'option ``-t`` à la commande, ce dernier permet d'activer le templating, pour utiliser le templating il vous faut au préalable : 
+
+1. Un dossier ``templates`` au même niveau que le dossier ``monSiteStatique``
+2. Dans le dossier ``templates`` il vous faudra 2 fichiers
+	* Un fichier ``layout.html``, dans lequel on ajoutera le contenu des fichiers markdown.
+	* Un fichier ``menu.html``, qui servira de menu aux pages web, il sera également intégré au fichier ``layout.html``
+3. Vous pourrez trouver dans le repo un dossier ``templates`` que nous vous conseillons de copier, cela vous permettra d'avoir des fichiers "de base" sur lesquels travailler
+
 ## Serveur HTTP
 
 1. Tapez cette commande : ``./statique serve /monSiteStatique``
