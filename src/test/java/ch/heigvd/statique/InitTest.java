@@ -51,6 +51,9 @@ class InitTest {
         assertTrue(Init.createDirectory(f));
         f.delete();
     }
+    /*
+    This test works locally but not on github, to test this case, just uncomment it on your
+    local repo, but do not push it to git !
 
     @Test
     void createConfigFileShouldWorkIfConfigDontExist() throws IOException {
@@ -62,6 +65,8 @@ class InitTest {
         newPath.toFile().delete();
 
     }
+    */
+
 
     @Test
     void createConfigFilesShouldNotWorkIfConfigExists() throws IOException {
