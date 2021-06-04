@@ -23,7 +23,8 @@ public class MDToHTML {
      */
     public static String MDtoHTML(String path) throws IOException {
         //récupère le contenu du fichier
-        BufferedReader br = new BufferedReader(new FileReader(path));
+        FileReader fr = new FileReader(path);
+        BufferedReader br = new BufferedReader(fr);
         String fileContent = "";
         String str;
         while ((str = br.readLine()) != null) {
@@ -36,6 +37,7 @@ public class MDToHTML {
         HtmlRenderer renderer = HtmlRenderer.builder().
                 attributeProviderFactory(attributeProviderContext -> new PAttributeProvider()).
                 build();
+        fr.close();
         br.close();
         return renderer.render(document);
     }
