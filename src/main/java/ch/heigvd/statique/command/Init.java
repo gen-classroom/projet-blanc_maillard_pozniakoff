@@ -1,5 +1,6 @@
 package ch.heigvd.statique.command;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
@@ -11,6 +12,40 @@ import java.io.*;
 
 @Command(name = "init", description = "Initialize a static site directory")
 public class Init implements Callable<Integer> {
+
+    final static String DEFAULT_INDEX = "# Sample Markdown\n" +
+            "\n" +
+            "This is some basic, sample markdown.\n" +
+            "\n" +
+            "## Second Heading\n" +
+            "\n" +
+            " * Unordered lists, and:\n" +
+            "  1. One\n" +
+            "  1. Two\n" +
+            "  1. Three\n" +
+            " * More\n" +
+            "\n" +
+            "> Blockquote\n" +
+            "\n" +
+            "And **bold**, *italics*, and even *italics and later **bold***. Even ~~strikethrough~~. [A link](https://markdowntohtml.com) to somewhere.\n" +
+            "\n" +
+            "And code highlighting:\n" +
+            "\n" +
+            "```js\n" +
+            "var foo = 'bar';\n" +
+            "\n" +
+            "function baz(s) {\n" +
+            "   return foo + ':' + s;\n" +
+            "}\n" +
+            "```\n" +
+            "\n" +
+            "Or inline code like `var foo = 'bar';`.\n" +
+            "\n" +
+            "Or an image of bears\n" +
+            "\n" +
+            "![bears](http://placebear.com/200/200)\n" +
+            "\n" +
+            "The end ...\n" ;
 
     //path to init directory
     @CommandLine.Parameters(paramLabel = "Directory", description = "Directory to initialize site in")
@@ -39,8 +74,7 @@ public class Init implements Callable<Integer> {
         File index = new File(path.toString() +  "/" + "index.md");
         if(config.exists() || index.exists())
             if(overwrite){
-                SiteConfig sc1 = new SiteConfig();
-                sc1.writeConfiguration(Paths.get(config.getPath()));
+               writeDefaultConfigFiles(config, index);
                 System.out.println("Config files overwritten");
                 return true;
             } else {
@@ -49,12 +83,19 @@ public class Init implements Callable<Integer> {
             }
         else{
             createFile(config);
-            SiteConfig sc1 = new SiteConfig();
-            sc1.writeConfiguration(Paths.get(config.getPath()));
             createFile(index);
+            writeDefaultConfigFiles(config, index);
             System.out.println("Config files created");
             return true;
         }
+    }
+
+    public static void writeDefaultConfigFiles(File config, File index) throws IOException {
+        SiteConfig sc1 = new SiteConfig();
+        sc1.writeConfiguration(Paths.get(config.getPath()));
+        FileWriter writer = new FileWriter(index);
+        writer.write(DEFAULT_INDEX);
+        writer.close();
     }
 
     public static boolean createDirectory(File directory){

@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 class InitTest {
 
     Path testFilesPath;
+
     @BeforeEach
     private void initPath() {
         testFilesPath = Paths.get(System.getProperty("user.dir") + "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
