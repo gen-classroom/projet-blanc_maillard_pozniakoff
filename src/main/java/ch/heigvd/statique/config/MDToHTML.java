@@ -1,3 +1,8 @@
+/**
+ * This class allows us the convert an md file into an html file
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.config;
 
 import java.io.*;
@@ -10,9 +15,9 @@ import org.commonmark.renderer.html.HtmlRenderer;
 public class MDToHTML {
 
     /**
-     * Converti un fichier markdown en html
-     * /!\ aucune vérification sur la validité du fichier passé n'est effectué
-     * @param path, le chemin vers le fichier md
+     * Converts md file to html file
+     * /!\ No verification on the validity of the file
+     * @param path path to the md file
      * @return la conversion en html
      * @throws IOException
      */

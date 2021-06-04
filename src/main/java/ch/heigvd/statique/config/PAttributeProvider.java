@@ -1,3 +1,8 @@
+/**
+ * The PAttributeProvider class is used to set the attributes of an HTML file
+ * @authors Jean-Luc Blanc, Lev Pozniakoff, Mathias Maillard
+ */
+
 package ch.heigvd.statique.config;
 
 import org.commonmark.node.Image;
@@ -8,6 +13,12 @@ import org.commonmark.renderer.html.AttributeProvider;
 import java.util.Map;
 
 class PAttributeProvider implements AttributeProvider {
+    /**
+     * Set the attributes of an HTML file
+     * @param node
+     * @param tagName
+     * @param attributes
+     */
     @Override
     public void setAttributes(Node node, String tagName, Map<String, String> attributes) {
         if (node instanceof Image) {
