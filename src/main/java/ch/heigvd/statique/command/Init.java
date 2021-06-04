@@ -69,6 +69,13 @@ public class Init implements Callable<Integer> {
         return 0;
     }
 
+    /**
+     * Crée les fichiers de configuration (index.md config.yaml)
+     * @param path le chemin ou créer le fichier
+     * @param overwrite si activé, va écraser les fichiers s'ils existent
+     * @return true, si la création des fichiers a fonctionnée
+     * @throws IOException
+     */
     public static boolean createConfigFiles(Path path, boolean overwrite) throws IOException {
         File config = new File(path.toString() + "/" + "config.yaml");
         File index = new File(path.toString() +  "/" + "index.md");
@@ -90,6 +97,12 @@ public class Init implements Callable<Integer> {
         }
     }
 
+    /**
+     * ecrit les configurations par défaut
+     * @param config le fichier config.yaml
+     * @param index le fichier index.md
+     * @throws IOException
+     */
     public static void writeDefaultConfigFiles(File config, File index) throws IOException {
         SiteConfig sc1 = new SiteConfig();
         sc1.writeConfiguration(Paths.get(config.getPath()));
@@ -98,6 +111,11 @@ public class Init implements Callable<Integer> {
         writer.close();
     }
 
+    /**
+     * Crée un dossier
+     * @param directory le dossier à créer
+     * @return true si le dossier a été créé, false sinon
+     */
     public static boolean createDirectory(File directory){
         if(!directory.exists()) {
             if (directory.mkdirs()) {
