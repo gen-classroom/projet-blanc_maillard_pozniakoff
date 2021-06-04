@@ -9,8 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.concurrent.Callable;
 
 import ch.heigvd.statique.config.Article;
@@ -27,6 +26,7 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 
+import static java.nio.file.StandardWatchEventKinds.*;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
 @Command(name = "build", description = "Build a static site")
@@ -46,12 +46,20 @@ public class Build implements Callable<Integer> {
   private boolean templating;
 
   /**
+   * --watch : Option to watch the build folder
+   * If specified, the build command will watch changes in the markdown files
+   */
+  @CommandLine.Option(names = "--watch", description = "Watch option")
+  Boolean watch = false;
+
+
+  /**
    * The build directory
    */
   private File build;
 
   /**
-   * The Temlate object for the layout
+   * The Template object for the layout
    */
   private Template layout;
 
@@ -61,10 +69,12 @@ public class Build implements Callable<Integer> {
    * @throws IOException
    */
   @Override
-  public Integer call() throws IOException {
+  public Integer call() throws IOException, InterruptedException {
+
 
     String currentPath = System.getProperty("user.dir") + "/" + path;
     String buildPath = currentPath + "/build";
+
 
     build = new File(buildPath);
     build.mkdirs();
@@ -74,6 +84,22 @@ public class Build implements Callable<Integer> {
     System.out.println("Finished building HTML files");
     System.out.println("You can find your web pages in " + buildPath);
 
+    Path watchPath = Paths.get(currentPath);
+    WatchService watchService =  watchPath.getFileSystem().newWatchService();
+    watchPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
+    //If watch is true, we keep looping
+    if(watch) {
+      while (true) {
+        WatchKey watchKey = watchService.take();
+        if (watchKey != null) {
+          watchKey.pollEvents().stream().forEach(event -> System.out.println(event.context()));
+          build = new File(buildPath);
+          build.mkdirs();
+          buildStaticSite(build.getParentFile(), currentPath);
+          watchKey.reset();
+        }
+      }
+    }
     return 1;
   }
 

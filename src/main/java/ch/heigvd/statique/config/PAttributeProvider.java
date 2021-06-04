@@ -12,7 +12,7 @@ import org.commonmark.renderer.html.AttributeProvider;
 
 import java.util.Map;
 
-class PAttributeProvider implements AttributeProvider {
+public class PAttributeProvider implements AttributeProvider {
     /**
      * Set the attributes of an HTML file
      * @param node
