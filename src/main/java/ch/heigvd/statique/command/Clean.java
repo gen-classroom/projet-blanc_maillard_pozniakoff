@@ -6,6 +6,9 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
+/**
+ * The clean command
+ */
 @Command(name = "clean", description = "Clean a static site")
 public class Clean implements Callable<Integer> {
 

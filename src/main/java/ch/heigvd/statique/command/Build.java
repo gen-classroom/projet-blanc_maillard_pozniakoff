@@ -24,9 +24,8 @@ import com.github.jknack.handlebars.io.FileTemplateLoader;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeHtml4;
 
 /**
- *
+ * The build command to build the static site
  */
-
 @Command(name = "build", description = "Build a static site")
 public class Build implements Callable<Integer> {
 
@@ -42,7 +41,7 @@ public class Build implements Callable<Integer> {
   private File build;
 
   /**
-   *
+   * The Temlate object for the layout
    */
   private Template layout;
 
@@ -109,7 +108,8 @@ public class Build implements Callable<Integer> {
   }
 
   /**
-   *
+   * Method to create the layout template
+   * @throws IOException
    */
   private void createLayoutTemplate()
   {
