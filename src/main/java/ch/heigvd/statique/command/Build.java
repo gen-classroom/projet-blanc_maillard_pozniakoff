@@ -65,6 +65,11 @@ public class Build implements Callable<Integer> {
     String currentPath = System.getProperty("user.dir") + "/" + path;
     String buildPath = currentPath + "/build";
 
+
+    build = new File(buildPath);
+    build.mkdirs();
+    buildStaticSite(build.getParentFile(), currentPath);
+    
     Path watchPath = Paths.get(currentPath);
     WatchService watchService =  watchPath.getFileSystem().newWatchService();
     watchPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
@@ -81,9 +86,6 @@ public class Build implements Callable<Integer> {
         watchKey.reset();
       }
     }
-    build = new File(buildPath);
-    build.mkdirs();
-    buildStaticSite(build.getParentFile(), currentPath);
     return 1;
   }
 
