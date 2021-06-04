@@ -54,10 +54,8 @@ class InitTest {
 
     @Test
     void createConfigFileShouldWorkIfConfigDontExist() throws IOException {
-        Path newPath = Paths.get(testFilesPath.toString()+"\\test");
+        Path newPath = Paths.get(testFilesPath.toString()+"\\newConfig");
         Init.createDirectory(newPath.toFile());
-        new File(newPath.toString() + "\\config.yaml").delete();
-        new File(newPath.toString() + "\\index.md").delete();
         assertTrue(Init.createConfigFiles(newPath, false));
         new File(newPath.toString() + "\\config.yaml").delete();
         new File(newPath.toString() + "\\index.md").delete();
