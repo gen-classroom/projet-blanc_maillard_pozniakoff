@@ -61,7 +61,7 @@ public class Build implements Callable<Integer> {
     build = new File(buildPath);
     build.mkdirs();
 
-    buildStaticSite(build, buildPath);
+    buildStaticSite(build.getParentFile(), currentPath);
 
     return 1;
   }
@@ -87,7 +87,7 @@ public class Build implements Callable<Integer> {
           else if(FilenameUtils.getExtension(filename).equals("md")){
             MDToHTML translator = new MDToHTML();
             String contentFileHTML = translator.MDtoHTML(path + "/" + filename);
-            String htmlPath = path + "/" + FilenameUtils.removeExtension(filename) + ".html";
+            String htmlPath = path + "/build/" + FilenameUtils.removeExtension(filename) + ".html";
 
             Path pathConfig = Paths.get(System.getProperty("user.dir") + "/" + this.path + "/config.yaml");
             SiteConfig sc = SiteConfig.loadFromDocument(pathConfig);

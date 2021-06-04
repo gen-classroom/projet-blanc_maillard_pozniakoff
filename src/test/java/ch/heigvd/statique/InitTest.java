@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 class InitTest {
 
     Path testFilesPath;
+
     @BeforeEach
     private void initPath() {
         testFilesPath = Paths.get(System.getProperty("user.dir") + "\\src\\test\\java\\ch\\heigvd\\statique\\testFiles");
@@ -51,6 +52,7 @@ class InitTest {
         assertTrue(Init.createDirectory(f));
         f.delete();
     }
+
     /*
     This test works locally but not on github, to test this case, just uncomment it on your
     local repo, but do not push it to git !
