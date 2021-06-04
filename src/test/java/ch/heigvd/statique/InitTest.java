@@ -62,7 +62,7 @@ class InitTest {
         new File(newPath.toString() + "\\config.yaml").delete();
         new File(newPath.toString() + "\\index.md").delete();
         newPath.toFile().delete();
-        testFilesPath.toFile().delete();
+
     }
 
     @Test
