@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BuildTest {
@@ -27,7 +28,7 @@ class BuildTest {
         cmd.execute(args);
 
         File index = new File("./build/index.html");
-        assertTrue(index.exists());
+        assertFalse(index.exists());
     }
 
     @Test
