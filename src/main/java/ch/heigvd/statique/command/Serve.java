@@ -29,13 +29,13 @@ public class Serve implements Callable<Integer> {
    * Specifies the folder containing the html files
    */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder with content")
-  String path;
+  private String path;
 
   /**
    * Option to watch the build folder
    */
   @CommandLine.Option(names = "--watch", description = "Watch option")
-  Boolean watch = false;
+  private boolean watch = false;
 
   /**
    * Main routine for the serve command
