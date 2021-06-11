@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: 11
       - name: "Build & test"
@@ -32,7 +32,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload zip
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -41,7 +41,7 @@ jobs:
           asset_name: statique.zip
           asset_content_type: application/zip
       - name: Upload ReadMe
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
