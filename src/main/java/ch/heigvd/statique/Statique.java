@@ -17,7 +17,7 @@ public class Statique implements Callable<Integer> {
 
 
   @CommandLine.Option(names = {"-V", "--version"}, versionHelp = true, description = "print version of generator")
-  boolean versionRequested;
+  private boolean versionRequested;
 
   public static void main(String... args) {
     int exitCode = new CommandLine(new Statique()).execute(args);

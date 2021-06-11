@@ -19,7 +19,7 @@ public class Clean implements Callable<Integer> {
    * Specifies the folder to clean
    */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to clean")
-  String path;
+  private String path;
 
   /**
    * Main routine for the clean command

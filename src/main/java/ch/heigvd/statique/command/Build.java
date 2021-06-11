@@ -36,7 +36,7 @@ public class Build implements Callable<Integer> {
    * The name of the directory to initialize the site, from the directory the command is typed in.
    */
   @CommandLine.Parameters(paramLabel = "Folder", description = "Folder to initialize site in")
-  String path;
+  private String path;
 
   /**
    * -t : option for the build command
@@ -50,7 +50,7 @@ public class Build implements Callable<Integer> {
    * If specified, the build command will watch changes in the markdown files
    */
   @CommandLine.Option(names = "--watch", description = "Watch option")
-  Boolean watch = false;
+  private boolean watch = false;
 
 
   /**
