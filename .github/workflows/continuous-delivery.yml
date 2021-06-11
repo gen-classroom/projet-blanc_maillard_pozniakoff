@@ -19,7 +19,7 @@ jobs:
           java-version: 1.8
       - name: "Build & test"
         run: |
-          mvn -B clean install --file SiteStatique/pom.xml
+          mvn -B clean install --file pom.xml
           echo "done!"
       - name: Create Release
         id: create_release
@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./SiteStatique/target/statique.zip
+          asset_path: ./target/statique.zip
           asset_name: statique.zip
           asset_content_type: application/zip
       - name: Upload ReadMe
